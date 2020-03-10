@@ -12,7 +12,6 @@ import os
 
 # Config file:
 DATASET = config['dataset'] # name of dataset  ie Himba_MEGA_10samples
-GENMAP_FULL=config['gmap_full_path'] # path to genetic map file for all chromosomes
 GENMAP_CHR=config['gmap_chr_dir'] # directory where genetic map files for individual chromosomes are located
 PHASED=config['phased']
 
@@ -118,7 +117,7 @@ rule convert_germline:
 
 rule make_vcf:
   input:
-    multiext("prepare/chroms_phased/{dataset}.chr{chrnum}.phased", ".haps", ".sample")
+    multiext("data/{dataset}.chr{chrnum}.phased", ".haps", ".sample")
   output:
     vcf = "prepare/chroms_phased_vcf/{dataset}.chr{chrnum}.phased.vcf",
     log = "shapeit_log/{dataset}_{chrnum}.vcf.log"
@@ -154,14 +153,18 @@ rule make_allchr_map:
     plink2 --vcf {input} --recode --out {output}
     """
 
-rule add_cm_col:
+rule add_cm:
   input:
-    "prepare/all_chroms/{dataset}.allchr.phased.map"
+    "prepare/all_chroms/{dataset}.allchr.phased.map",
   output:
     "prepare/all_chroms/{dataset}.allchr.phased.cm.map"
+  params:
+    gmap = GENMAP_CHR+"chr@.gmap.txt",
+    in_pre = "prepare/all_chroms/{dataset}.allchr.phased",
+    out_pre = "prepare/all_chroms/{dataset}.allchr.phased.cm"
   shell:
     """
-    Rscript diss_centimorgan_adder.R {GENMAP_CHR} {input}
+    plink --file {params.in_pre} --cm-map {params.gmap} --recode --out {params.out_pre}
     """
 
 rule make_bim:
@@ -242,12 +245,13 @@ rule prepare_ibd:
 rule repair_ibd:
   input:
     ibd = "results/RoH_param_combs/{bits}/IBD_{bits}_{err}_hap.ibd",
-    vcf = expand("prepare/all_chroms/{dataset}.allchr.phased.vcf", dataset=DATASET)
+    vcf = expand("prepare/all_chroms/{dataset}.allchr.phased.vcf", dataset=DATASET),
+    map = expand("prepare/all_chroms/{dataset}.allchr.phased.cm.map", dataset=DATASET)
   output:
     "results/RoH_param_combs/{bits}/IBD_{bits}_{err}_hap_segsJoined.ibd"
   shell:
     """
-    cat {input.ibd} | java -jar progs/merge-ibd-segments.16May19.ad5.jar {input.vcf} {GENMAP_FULL} 0.6 1 | awk '{{print $1, $2, $3, $4, $5, $6, $7, $9}}' > {output}
+    cat {input.ibd} | java -jar progs/merge-ibd-segments.16May19.ad5.jar {input.vcf} {input.map} 0.6 1 | awk '{{print $1, $2, $3, $4, $5, $6, $7, $9}}' > {output}
     """
 
 rule get_seg_depth:
@@ -460,12 +464,13 @@ rule choose_params:
 
 rule ibdne:
   input:
-    ibd = "results/other/{dataset}_only_QCed.ibd"
+    ibd = "results/other/{dataset}_only_QCed.ibd",
+    map = "prepare/all_chroms/{dataset}.allchr.phased.cm.map"
   output:
     multiext("results/IBDne_output/{dataset}_GERMLINE2_IBDNe_minibd-{cM}", ".log", ".pair.excl", ".region.excl", ".ne", ".boot")
   benchmark:
     "benchmarks/{dataset}/{cM}_ibdne.txt"
   shell:
     """
-    cat {input} | java -jar progs/ibdne.07May18.6a4.jar map={GENMAP_FULL} out=results/IBDne_output/{wildcards.dataset}_GERMLINE2_IBDNe_minibd-{cM} mincm={cM} nthreads={IBDne_THREADs} nboots=80 gmax={GMAX}
+    cat {input} | java -jar progs/ibdne.07May18.6a4.jar map={input.map} out=results/IBDne_output/{wildcards.dataset}_GERMLINE2_IBDNe_minibd-{cM} mincm={cM} nthreads={IBDne_THREADs} nboots=80 gmax={GMAX}
     """

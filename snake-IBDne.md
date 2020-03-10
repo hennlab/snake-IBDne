@@ -89,24 +89,24 @@ Please do not edit files or run the pipeline in the directory `/share/hennlab/pr
 
 ### How to run:
 
-The snakemake command must be run with four config parameters
+The snakemake command must be run with three config parameters
 - dataset: filename of initial QC'ed bim/bam/fam files (without file extension)
+      ex: if the files are named "Himba_merged.bim" then set dataset=Himba_merged
 - phased: FALSE if input data is not phased, TRUE if input data is phased.
-- gmap-full_path: path to plink format recombination map file for all chromosomes
 - gmap-chr_dir: directory containing plink format recombination maps for separate chromosomes
-    - filenames must be in the format chr{chrnum}.gmap.txt
+    - filenames MUST be named in the format chr{chrnum}.gmap.txt
 
 Example:
 ```bash
 
 ### Dry run - testing workflow
-/share/hennlab/progs/miniconda3/bin/snakemake -n --config dataset=xal phased=TRUE gmap_full_path=austin_files/xal_allchr.phased.map gmap_chr_dir=/share/hennlab/projects/snake-IBDNe/austin_files/ -p -j 10
+/share/hennlab/progs/miniconda3/bin/snakemake -n --config dataset=xal phased=TRUE gmap_chr_dir=/share/hennlab/projects/snake-IBDNe/austin_files/ -p -j 10
 
 ## Generate DAG of pipeline
-/share/hennlab/progs/miniconda3/bin/snakemake --config dataset=xal phased=TRUE gmap_full_path=austin_files/xal_allchr.phased.map gmap_chr_dir=/share/hennlab/projects/snake-IBDNe/austin_files/ --rulegraph | dot -Tpng > rulegraph.png
+/share/hennlab/progs/miniconda3/bin/snakemake --config dataset=xal phased=TRUE gmap_chr_dir=/share/hennlab/projects/snake-IBDNe/austin_files/ --rulegraph | dot -Tpng > rulegraph.png
 
 ## Run the pipeline!
-/share/hennlab/progs/miniconda3/bin/snakemake -R convert_germline --config dataset=xal phased=TRUE gmap_full_path=austin_files/xal_allchr.phased.map gmap_chr_dir=/share/hennlab/projects/Xal_snake-IBDne/austin_files/ -p -j 40
+/share/hennlab/progs/miniconda3/bin/snakemake  --config dataset=xal phased=TRUE gmap_chr_dir=/share/hennlab/projects/Xal_snake-IBDne/austin_files/ -p -j 40
 
 ```
 ### Pipeline Overview
