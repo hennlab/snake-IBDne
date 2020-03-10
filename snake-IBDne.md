@@ -77,16 +77,6 @@ export PATH="/share/hennlab/progs/GERMLINE2-master:$PATH"
      - merge-ibd-segments.16May19.ad5.jar
      - ibdne.07May18.6a4.jar
 
-For Henn lab augrabies users:
-- Until the lab GitHub is set up, the best way to run the IBDne pipeline on your particular data set is by copying the snake-IBDne project directory into a new location
-
-```bash
-# replace "mydata" with the name of your dataset
-cp -R /share/hennlab/projects/snake-IBDne/ /share/hennlab/projects/mydata-IBDne
-```
-
-Please do not edit files or run the pipeline in the directory `/share/hennlab/projects/snake-IBDne/`, because this directory is serving as a template for everyone until we get the GitHub up and running.
-
 ### How to run:
 
 The snakemake command must be run with three config parameters
