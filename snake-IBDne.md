@@ -51,7 +51,7 @@ export PATH="/share/hennlab/progs/GERMLINE2-master:$PATH"
 ### Required files in working directory:
 
 - data folder with input data:
-    - if data is NOT phased yet: the data folder must contain bim, bam, fam files named in the format {dataset}.bim /bam/fam
+    - if data is NOT phased yet: the data folder must contain bim, bed, fam files named in the format {dataset}.bim /bed/fam
     - if data IS phased already: the data folder must contain plink .haps, .sample files for individual chromosomes named in the format {dataset}.chr{chrnum}.phased.haps /.sample
 - regions folder with exclude_regions_hg19.txt
 - scripts folder with the following required scripts:
@@ -80,7 +80,7 @@ export PATH="/share/hennlab/progs/GERMLINE2-master:$PATH"
 ### How to run:
 
 The snakemake command must be run with three config parameters
-- dataset: filename of initial QC'ed bim/bam/fam files (without file extension)
+- dataset: filename of initial QC'ed bim/bed/fam files (without file extension)
       ex: if the files are named "Himba_merged.bim" then set dataset=Himba_merged
 - phased: FALSE if input data is not phased, TRUE if input data is phased.
 - gmap-chr_dir: directory containing plink format recombination maps for separate chromosomes
