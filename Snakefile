@@ -104,9 +104,9 @@ rule convert_germline:
   input:
     multiext("data/{dataset}.chr{chrnum}.phased", ".haps", ".sample")
   output:
-    multiext("prepare/chroms_phased/{dataset}.chr{chrnum}.phased", ".ped", ".map")
+    multiext("data/{dataset}.chr{chrnum}.phased", ".ped", ".map")
   params:
-    prefix = "prepare/chroms_phased/{dataset}.chr{chrnum}.phased",
+    prefix = "data/{dataset}.chr{chrnum}.phased",
     gmap = GENMAP_CHR+"chr{chrnum}.gmap.txt"
   benchmark:
     "benchmarks/{dataset}/{chrnum}/convert_germline.txt"
@@ -124,7 +124,7 @@ rule make_vcf:
   benchmark:
     "benchmarks/{dataset}/{chrnum}/make_vcf.txt"
   params:
-    in_pre="prepare/chroms_phased/{dataset}.chr{chrnum}.phased",
+    in_pre="data/{dataset}.chr{chrnum}.phased",
   shell:
     """
     shapeit -convert --input-haps {params.in_pre} --output-vcf {output.vcf} --output-log {output.log}
@@ -148,9 +148,11 @@ rule make_allchr_map:
     "prepare/all_chroms/{dataset}.allchr.phased.vcf"
   output:
     "prepare/all_chroms/{dataset}.allchr.phased.map"
+  params:
+    "prepare/all_chroms/{dataset}.allchr.phased"
   shell:
     """
-    plink2 --vcf {input} --recode --out {output}
+    plink --vcf {input} --recode --out {params}
     """
 
 rule add_cm:
@@ -201,9 +203,9 @@ rule low_Density:
 
 rule flip:
   input:
-    "prepare/chroms_phased/{dataset}.chr{chrnum}.phased.ped"
+    "data/{dataset}.chr{chrnum}.phased.ped"
   output:
-    "prepare/chroms_phased/{dataset}.chr{chrnum}.phased.flip.ped"
+    "data/{dataset}.chr{chrnum}.phased.flip.ped"
   shell:
     """
     gawk ' {{ t = $1; $1 = $2; $2 = t; print; }} ' {input} > {output}
@@ -211,8 +213,8 @@ rule flip:
 
 rule gen_Match:
   input:
-    map = "prepare/chroms_phased/{dataset}.chr{chrnum}.phased.map",
-    ped = "prepare/chroms_phased/{dataset}.chr{chrnum}.phased.flip.ped"
+    map = "data/{dataset}.chr{chrnum}.phased.map",
+    ped = "data/{dataset}.chr{chrnum}.phased.flip.ped"
   output:
     "results/RoH_param_combs/{bits}/{dataset}.chr{chrnum}.phased_GERMLINE2_RoH_{bits}_{err}_hap.match"
   params:
