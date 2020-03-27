@@ -262,9 +262,10 @@ rule get_seg_depth:
     bim = expand("prepare/all_chroms/{dataset}.allchr.phased.bim", dataset=DATASET)
   output:
     "results/RoH_param_combs/{bits}/GERMLINE2_IBDdepth_{bits}_{err}_hap"
+  benchmark: "benchmark_get_seg_depth_{bits}_{err}.txt"
   shell:
     """
-    Rscript scripts/get_seg_depthv2.R {input.ibd} {input.bim} > {output}
+    Rscript scripts/get_seg_depthv2.1.R {input.ibd} {input.bim} > {output}
     """
 
 rule get_outlier_SNPs:

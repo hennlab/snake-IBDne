@@ -102,3 +102,13 @@ Example:
 ### Pipeline Overview
 
 ![DAG](rulegraph.png)
+
+
+
+# Natalie Himba run
+/share/hennlab/progs/miniconda3/bin/snakemake --config dataset=Himba_merged phased=FALSE gmap_chr_dir=/share/hennlab/reference/recombination_maps/genetic_map_AfricanAmerian/snake-IBDne_maps/ -p -j 30d
+
+
+/share/hennlab/progs/miniconda3/bin/snakemake --config dataset=HimbaMega phased=FALSE gmap_chr_dir=/share/hennlab/reference/recombination_maps/genetic_map_AfricanAmerian/snake-IBDne_maps/ -p -j 30
+
+/share/hennlab/progs/miniconda3/bin/snakemake -R get_seg_depth --until get_outlier_SNPs --config dataset=MegaHimba phased=FALSE gmap_chr_dir=/share/hennlab/reference/recombination_maps/genetic_map_AfricanAmerian/snake-IBDne_maps/ -p 
