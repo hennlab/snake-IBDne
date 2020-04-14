@@ -76,6 +76,7 @@ export PATH="/share/hennlab/progs/GERMLINE2-master:$PATH"
 - progs folder with the following java programs:
      - merge-ibd-segments.16May19.ad5.jar
      - ibdne.07May18.6a4.jar
+- Snakefile 
 
 ### How to run:
 
@@ -102,6 +103,3 @@ Example:
 ### Pipeline Overview
 
 ![DAG](rulegraph.png)
-
-
-
