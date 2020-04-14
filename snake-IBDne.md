@@ -48,7 +48,7 @@ conda install -c r r-data.table
 ```bash
 export PATH="/share/hennlab/progs/GERMLINE2-master:$PATH"
 ```
-### Required files in working directory:
+### Required files in working directory: (Please note - you must run each population in its own directory.)
 
 - data folder with input data:
     - if data is NOT phased yet: the data folder must contain bim, bed, fam files named in the format {dataset}.bim /bed/fam
@@ -76,7 +76,7 @@ export PATH="/share/hennlab/progs/GERMLINE2-master:$PATH"
 - progs folder with the following java programs:
      - merge-ibd-segments.16May19.ad5.jar
      - ibdne.07May18.6a4.jar
-- Snakefile 
+- Snakefile
 
 ### How to run:
 
