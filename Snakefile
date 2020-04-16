@@ -14,7 +14,7 @@ import os
 DATASET = config['dataset'] # name of dataset  ie Himba_MEGA_10samples
 GENMAP_CHR=config['gmap_chr_dir'] # directory where genetic map files for individual chromosomes are located
 PHASED=config['phased']
-
+REF=config['ref']
 # Variables
 CHR = [i for i in range(1,23)]
 BITS = [i for i in range(5,201,5)]
@@ -97,7 +97,7 @@ if PHASED=='FALSE':
       "benchmarks/{dataset}/{chrnum}/phasing.txt"
     shell:
       """
-      shapeit --input-bed {params.in_pre} --input-map {params.inputmap} --output-max {params.out_pre} --output-log {output.log} --window 1 --main 30 --prune 16 --burn 10
+      shapeit --input-bed {params.in_pre} --input-map {params.inputmap} --input-ref {REF}chr{chrnum}.hap.gz {REF}chr{chrnum}.legend {REF}.sample --output-max {params.out_pre} --output-log {output.log} --duohmm -W 5
       """
 
 rule convert_germline:
@@ -262,10 +262,10 @@ rule get_seg_depth:
     bim = expand("prepare/all_chroms/{dataset}.allchr.phased.bim", dataset=DATASET)
   output:
     "results/RoH_param_combs/{bits}/GERMLINE2_IBDdepth_{bits}_{err}_hap"
-  threads: workflow.cores
+  benchmark: "benchmarks/get_seg_depth_{bits}_{err}.log"
   shell:
     """
-    Rscript scripts/get_seg_depthv2.1.R {input.ibd} {input.bim} > {output}
+    Rscript scripts/get_seg_depthv3.R {input.ibd} {input.bim} > {output}
     """
 
 rule get_outlier_SNPs:

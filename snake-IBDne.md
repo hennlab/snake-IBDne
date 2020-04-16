@@ -86,6 +86,15 @@ The snakemake command must be run with three config parameters
 - phased: FALSE if input data is not phased, TRUE if input data is phased.
 - gmap-chr_dir: directory containing plink format recombination maps for separate chromosomes
     - filenames MUST be named in the format chr{chrnum}.gmap.txt
+- ref: file prefix of the reference population 1000G .haps.gz, .legend, .sample, excluding the _chr{chrnum} portion
+    - example: if the files are titled
+    `1000GP_Phase3/1000GP_Phase3_chr6.hap.gz`
+    `1000GP_Phase3/1000GP_Phase3_chr6.legend` and
+    `1000GP_Phase3/1000GP_Phase3.sample`
+    provide the command line argument as such: `ref=1000GP_Phase3/1000GP_Phase3`
+    note that the .hap and .legend files must be named with `_chr{number}.hap.gz` and `_chr{number}.legend` following the prefix you provide in the ref command line option
+    - Data downloaded from this link : https://mathgen.stats.ox.ac.uk/impute/1000GP_Phase3.html Data downloaded from this link
+    - For Henn lab users: location of these files is `/share/hennlab/reference/1000G_Phase3_haps-sample-legend/` 
 
 Example:
 ```bash
