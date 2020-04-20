@@ -94,7 +94,7 @@ The snakemake command must be run with three config parameters
     provide the command line argument as such: `ref=1000GP_Phase3/1000GP_Phase3`
     note that the .hap and .legend files must be named with `_chr{number}.hap.gz` and `_chr{number}.legend` following the prefix you provide in the ref command line option
     - Data downloaded from this link : https://mathgen.stats.ox.ac.uk/impute/1000GP_Phase3.html Data downloaded from this link
-    - For Henn lab users: location of these files is `/share/hennlab/reference/1000G_Phase3_haps-sample-legend/` 
+    - For Henn lab users: location of these files is `/share/hennlab/reference/1000G_Phase3_haps-sample-legend/`
 
 Example:
 ```bash
@@ -112,3 +112,9 @@ Example:
 ### Pipeline Overview
 
 ![DAG](rulegraph.png)
+
+
+/share/hennlab/progs/miniconda3/bin/snakemake --forceall --config dataset=MegaHimba phased=FALSE gmap_chr_dir=/share/hennlab/reference/recombination_maps/genetic_map_AfricanAmerian/snake-IBDne_maps/ ref=/share/hennlab/reference/1000G_Phase3_haps-sample-legend/1000GP_Phase3/1000GP_Phase3 -p -j 10
+
+
+/share/hennlab/progs/miniconda3/bin/snakemake --config dataset=MegaHimba phased=FALSE gmap_chr_dir=/share/hennlab/reference/recombination_maps/genetic_map_AfricanAmerian/snake-IBDne_maps/ ref=/share/hennlab/reference/1000G_Phase3_haps-sample-legend/1000GP_Phase3/1000GP_Phase3 -p -j 10

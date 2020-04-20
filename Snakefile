@@ -97,7 +97,7 @@ if PHASED=='FALSE':
       "benchmarks/{dataset}/{chrnum}/phasing.txt"
     shell:
       """
-      shapeit --input-bed {params.in_pre} --input-map {params.inputmap} --input-ref {REF}chr{chrnum}.hap.gz {REF}chr{chrnum}.legend {REF}.sample --output-max {params.out_pre} --output-log {output.log} --duohmm -W 5
+      shapeit --input-bed {params.in_pre} --input-map {params.inputmap} --input-ref {REF}_chr{wildcards.chrnum}.hap.gz {REF}_chr{wildcards.chrnum}.legend.gz {REF}.sample --output-max {params.out_pre} --output-log {output.log} --duohmm -W 5
       """
 
 rule convert_germline:
