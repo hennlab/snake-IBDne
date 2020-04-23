@@ -80,7 +80,7 @@ export PATH="/share/hennlab/progs/GERMLINE2-master:$PATH"
 
 ### How to run:
 
-The snakemake command must be run with three config parameters
+The snakemake command must be run with four config parameters
 - dataset: filename of initial QC'ed bim/bed/fam files (without file extension)
       ex: if the files are named "Himba_merged.bim" then set dataset=Himba_merged
 - phased: FALSE if input data is not phased, TRUE if input data is phased.
@@ -100,21 +100,15 @@ Example:
 ```bash
 
 ### Dry run - testing workflow
-/share/hennlab/progs/miniconda3/bin/snakemake -n --config dataset=xal phased=TRUE gmap_chr_dir=/share/hennlab/projects/snake-IBDNe/austin_files/ -p -j 10
+/share/hennlab/progs/miniconda3/bin/snakemake -n --config dataset=xal phased=TRUE ref=/share/hennlab/reference/1000G_Phase3_haps-sample-legend/1000GP_Phase3/1000GP_Phase3 gmap_chr_dir=/share/hennlab/projects/snake-IBDNe/austin_files/ -p -j 10
 
 ## Generate DAG of pipeline
-/share/hennlab/progs/miniconda3/bin/snakemake --config dataset=xal phased=TRUE gmap_chr_dir=/share/hennlab/projects/snake-IBDNe/austin_files/ --rulegraph | dot -Tpng > rulegraph.png
+/share/hennlab/progs/miniconda3/bin/snakemake --config dataset=xal phased=TRUE ref=/share/hennlab/reference/1000G_Phase3_haps-sample-legend/1000GP_Phase3/1000GP_Phase3 gmap_chr_dir=/share/hennlab/projects/snake-IBDNe/austin_files/ --rulegraph | dot -Tpng > rulegraph.png
 
 ## Run the pipeline!
-/share/hennlab/progs/miniconda3/bin/snakemake  --config dataset=xal phased=TRUE gmap_chr_dir=/share/hennlab/projects/Xal_snake-IBDne/austin_files/ -p -j 20
+/share/hennlab/progs/miniconda3/bin/snakemake  --config dataset=xal phased=TRUE ref=/share/hennlab/reference/1000G_Phase3_haps-sample-legend/1000GP_Phase3/1000GP_Phase3 gmap_chr_dir=/share/hennlab/projects/Xal_snake-IBDne/austin_files/ -p -j 20
 
 ```
 ### Pipeline Overview
 
 ![DAG](rulegraph.png)
-
-
-/share/hennlab/progs/miniconda3/bin/snakemake --forceall --config dataset=MegaHimba phased=FALSE gmap_chr_dir=/share/hennlab/reference/recombination_maps/genetic_map_AfricanAmerian/snake-IBDne_maps/ ref=/share/hennlab/reference/1000G_Phase3_haps-sample-legend/1000GP_Phase3/1000GP_Phase3 -p -j 10
-
-
-/share/hennlab/progs/miniconda3/bin/snakemake --config dataset=MegaHimba phased=FALSE gmap_chr_dir=/share/hennlab/reference/recombination_maps/genetic_map_AfricanAmerian/snake-IBDne_maps/ ref=/share/hennlab/reference/1000G_Phase3_haps-sample-legend/1000GP_Phase3/1000GP_Phase3 -p -j 10
