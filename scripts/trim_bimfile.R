@@ -2,7 +2,7 @@
 #
 # This script accepts a plink .bim file and a genetic map file that the bim file should be trimmed to fit
 # This script returns list of SNPs to remove from the plink file
-# The required arguments are: Input .bim (the .bim file to be trimmed)
+# The required arguments are: Input .bim prefix (the .bim file to be trimmed)
 #                           : Input genetic map file
 #
 # NOTE - this script expects the genetic map to have a header and for the first column to be the physical position
