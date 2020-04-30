@@ -83,7 +83,7 @@ if PHASED=='FALSE':
       plink --bfile data/{wildcards.dataset} --chr {wildcards.chrnum} --make-bed --out {params}
       """
 
-  rule phasing:
+  rule trim_phase:
     input:
       multiext("prepare/chroms/{dataset}.chr{chrnum}", ".bed", ".bim", ".fam" )
     output:
@@ -97,7 +97,7 @@ if PHASED=='FALSE':
       "benchmarks/{dataset}/{chrnum}/phasing.txt"
     shell:
       """
-      shapeit --input-bed {params.in_pre} --input-map {params.inputmap} --input-ref {REF}_chr{wildcards.chrnum}.hap.gz {REF}_chr{wildcards.chrnum}.legend.gz {REF}.sample --output-max {params.out_pre} --output-log {output.log} --duohmm -W 5
+      bash scripts/shapeit_iterate.sh {params.in_pre} {params.inputmap} {output.log} {params.out_pre} {REF}_chr{wildcards.chrnum}.hap.gz {REF}_chr{wildcards.chrnum}.legend.gz {REF}.sample
       """
 
 rule convert_germline:
@@ -464,7 +464,6 @@ rule choose_params:
     """
     bash scripts/choose_params.sh {input.ibd} {input.norm} {wildcards.dataset}
     """
-
 rule ibdne:
   input:
     ibd = "results/other/{dataset}_only_QCed.ibd",

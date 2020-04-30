@@ -8,7 +8,7 @@
 # NOTE - this script expects the genetic map to have a header and for the first column to be the physical position
 #
 # USAGE:
-# $ Rscript trim_bimfile.R ${FILE}_chr21.bim genetic_map_chr21_combined_b37.txt
+# $ Rscript trim_bimfile.R ${FILE}_chr21 genetic_map_chr21_combined_b37.txt
 
 #!/usr/bin/env Rscript
 args = commandArgs(trailingOnly=TRUE)
