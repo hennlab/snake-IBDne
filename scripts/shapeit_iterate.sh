@@ -16,22 +16,21 @@ plink --bfile ${INPUT} --exclude ${INPUT}_removeSNPs --make-bed --out ${INPUT}_e
 #cat ${FILE}.chr${chr}_endsTrimmed.bim >> dat_QCed_endsTrimmed.bim
 
 # Run SHAPEIT
-shapeit -B ${INPUT}_endsTrimmed -M ${MAP} --input-ref ${REF_HAP} ${REF_LEG} ${REF_SAMP} --duohmm -W 5 -O ${OUTPUT} --output-log ${LOG} -T 4
+shapeit -B ${INPUT}_endsTrimmed -M ${MAP} --input-ref ${REF_HAP} ${REF_LEG} ${REF_SAMP} --duohmm -W 5 -O ${OUTPUT} --output-log ${LOG}.log -T 4
 
-files=( shapeit_*.snp.strand )
+files=( ${LOG}.snp.strand )
 if (( ${#files[@]} )); then
-  echo 'passed if'
-  N=`ls -l shapeit_*.snp.strand | wc -l`
+  N=`ls -l ${LOG}.snp.strand | wc -l`
   while [ $N -gt 0 ]
   do
-      grep Missing shapeit_*.snp.strand | cut -f4 > ${INPUT}_missing_from_ref.txt
-      grep Strand shapeit_*.snp.strand | awk '$11==1 {print $4}' > ${INPUT}_flip_in_dataset.txt
-      grep Strand shapeit_*.snp.strand | awk '$11==0 {print $4}' > ${INPUT}_cannot_flip_in_dataset.txt
+      grep Missing ${LOG}.snp.strand | cut -f4 > ${INPUT}_missing_from_ref.txt
+      grep Strand ${LOG}.snp.strand | awk '$11==1 {print $4}' > ${INPUT}_flip_in_dataset.txt
+      grep Strand ${LOG}.snp.strand | awk '$11==0 {print $4}' > ${INPUT}_cannot_flip_in_dataset.txt
       cat ${INPUT}_missing_from_ref.txt ${INPUT}_cannot_flip_in_dataset.txt > ${INPUT}_remove_from_dataset.txt
-      rm -f shapeit_*.snp.strand*
+      rm -f ${LOG}.snp.strand*
       rm -f ${INPUT}_missing_from_ref.txt ${INPUT}_cannot_flip_in_dataset.txt
       plink --bfile ${INPUT}_endsTrimmed --flip ${INPUT}_flip_in_dataset.txt --exclude ${INPUT}_remove_from_dataset.txt --make-bed --out ${INPUT}_endsTrimmed_misalignRepaired
-      shapeit -B ${INPUT}_endsTrimmed_misalignRepaired -M ${MAP} --input-ref ${REF_HAP} ${REF_LEG} ${REF_SAMP} --duohmm -W 5 -O ${OUTPUT} --output-log ${LOG} -T 4
-      N=`ls -l shapeit_*.snp.strand | wc -l`
+      shapeit -B ${INPUT}_endsTrimmed_misalignRepaired -M ${MAP} --input-ref ${REF_HAP} ${REF_LEG} ${REF_SAMP} --duohmm -W 5 -O ${OUTPUT} --output-log ${LOG}.log -T 4
+      N=`ls -l ${LOG}.snp.strand | wc -l`
   done
 fi

@@ -88,16 +88,17 @@ if PHASED=='FALSE':
       multiext("prepare/chroms/{dataset}.chr{chrnum}", ".bed", ".bim", ".fam" )
     output:
       multiext("data/{dataset}.chr{chrnum}.phased", ".haps", ".sample"),
-      log = "shapeit_log/{dataset}_{chrnum}.phased.log"
+      log = "shapeit_log/{dataset}_chr{chrnum}.phased.log"
     params:
       inputmap = GENMAP_CHR+"chr{chrnum}.gmap.txt",
       in_pre="prepare/chroms/{dataset}.chr{chrnum}",
-      out_pre="data/{dataset}.chr{chrnum}.phased"
+      out_pre="data/{dataset}.chr{chrnum}.phased",
+      log_pre="shapeit_log/{dataset}_chr{chrnum}.phased"
     benchmark:
       "benchmarks/{dataset}/{chrnum}/phasing.txt"
     shell:
       """
-      bash scripts/shapeit_iterate.sh {params.in_pre} {params.inputmap} {output.log} {params.out_pre} {REF}_chr{wildcards.chrnum}.hap.gz {REF}_chr{wildcards.chrnum}.legend.gz {REF}.sample
+      bash scripts/shapeit_iterate.sh {params.in_pre} {params.inputmap} {params.log_pre} {params.out_pre} {REF}_chr{wildcards.chrnum}.hap.gz {REF}_chr{wildcards.chrnum}.legend.gz {REF}.sample
       """
 
 rule convert_germline:
