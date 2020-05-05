@@ -68,11 +68,11 @@ export PATH="/share/hennlab/progs/GERMLINE2-master:$PATH"
      - find_lowDensityRegs.R
      - get_outlier_regions.R
      - get_outlier_SNPs.R
-     - get_seg_depth.R
-     - get_seg_depthv2.R
+     - get_seg_depthv3.R
      - join_RoHsegs.R
      - shapeit_to_germline.py
      - trim_bimfile.R
+     - shapeit_iterate.sh 
 - progs folder with the following java programs:
      - merge-ibd-segments.16May19.ad5.jar
      - ibdne.07May18.6a4.jar
