@@ -1,5 +1,5 @@
 # snake-IBDne
-Repo for running custom snakemake for IBDne
+Repo for running custom snakemake for IBDne.
 
 Citations for programs in pipeline:
 
@@ -23,16 +23,12 @@ Please run each dataset in its own separate folder for clarity.
 - R 3.6.1
 - plink2 1.90p
 - GERMLINE2
-- ibdne.07May18.6a4.jar
+- ibdne.07May18.6a4.jar (download from [here](https://faculty.washington.edu/browning/ibdne.html#download) )
 - merge-ibd-segments.16May19.ad5.jar
 
 ### Setting up conda environment
 
-1. If you have never used conda before, you should add our installation to your path as such: (only need to do this once)
-```bash
-export PATH="/share/hennlab/progs/miniconda3/etc/profile.d/":PATH
-```
-You must also run this command every time before you use conda:
+1. For Henn lab users: run this command every time before you use conda:
 ```bash
 source /share/hennlab/progs/miniconda3/etc/profile.d/conda.sh
 ```
@@ -86,6 +82,7 @@ export PATH="/share/hennlab/progs/GERMLINE2-master:$PATH"
      - merge-ibd-segments.16May19.ad5.jar
      - ibdne.07May18.6a4.jar
 - Snakefile
+     - the file entitled "ibdne_2versions.smk" is an alternative snakefile for comparing different versions of ibdne. Please use "Snakefile" for regular runs of the pipeline
 
 ### How to run:
 
@@ -121,3 +118,8 @@ Example:
 ### Pipeline Overview
 
 ![DAG](rulegraph.png)
+
+
+## Running ibdne_2versions.smk
+
+This snakefile will output results from two versions of IBDne (ibdne.23Apr20.ae9.jar and ibdne.04Sep15.e78.jar) for comparison. To run this version, add the flag `-s ibdne_2versions.smk`
