@@ -475,5 +475,5 @@ rule ibdne:
     "benchmarks/{dataset}/{cM}_ibdne.txt"
   shell:
     """
-    cat {input.ibd} | java -jar progs/ibdne.07May18.6a4.jar map={input.map} out=results/IBDne_output/{wildcards.dataset}_GERMLINE2_IBDNe_minibd-{cM} mincm={cM} nthreads={IBDne_THREADs} nboots=80 gmax={GMAX}
+    cat {input.ibd} | java -jar progs/ibdne.04Sep15.e78.jar map={input.map} out=results/IBDne_output/{wildcards.dataset}_GERMLINE2_IBDNe_minibd-{cM} mincm={cM} nthreads={IBDne_THREADs} nboots=80 gmax={GMAX}
     """
