@@ -3,7 +3,7 @@ Repo for running custom snakemake for IBDne.
 
 Citations for programs in pipeline:
 
-`merge-ibd-segments.16May19.ad5.jar` and `ibdne.07May18.6a4.jar`:
+`merge-ibd-segments.16May19.ad5.jar` and `ibdne.04Sep15.e78.jar`:
 
 B L Browning and S R Browning (2013). Improving the accuracy and efficiency of identity-by-descent detection in   population data. Genetics 194(2):459-71. doi:10.1534/genetics.113.150029
 
@@ -23,7 +23,7 @@ Please run each dataset in its own separate folder for clarity.
 - R 3.6.1
 - plink2 1.90p
 - GERMLINE2
-- ibdne.07May18.6a4.jar (download from [here](https://faculty.washington.edu/browning/ibdne.html#download) )
+- ibdne.04Sep15.e78.jar (download from [here](https://faculty.washington.edu/browning/ibdne.html#download) )
 - merge-ibd-segments.16May19.ad5.jar
 
 ### Setting up conda environment
