@@ -482,7 +482,7 @@ rule v_2015_ibdne:
     IBDne_THREADs
   shell:
     """
-    cat {input.ibd} | java -jar /share/hennlab/progs/IBDne/ibdne.04Sep15.e78.jar map={input.map} out=results/IBDne_output/{wildcards.dataset}_GERMLINE2_IBDNe_minibd-{cM} mincm={cM} nthreads={threads} nboots=80 gmax={GMAX}
+    cat {input.ibd} | java -jar /share/hennlab/progs/IBDne/ibdne.04Sep15.e78.jar map={input.map} out=results/IBDne_output/{wildcards.dataset}_GERMLINE2_IBDNe_minibd-{cM} minibd={cM} nthreads={threads} nboots=80 gmax={GMAX}
     """
 
 rule v_2020_ibdne:
