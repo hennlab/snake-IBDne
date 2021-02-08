@@ -91,7 +91,7 @@ The snakemake command must be run with four config parameters
       ex: if the files are named "Himba_merged.bim" then set dataset=Himba_merged
 - phased: FALSE if input data is not phased, TRUE if input data is phased.
 - gmap-chr_dir: directory containing plink format recombination maps for separate chromosomes. 
-    - filenames MUST be named in the format chr{chrnum}.gmap.txt
+    - filenames MUST be named in the format `chr{chrnum}.gmap.txt`
     - remember to put a `/` at the end of the path. for example: `/share/hennlab/reference/snake-IBDne_maps/`
 - ref: file prefix of the reference population 1000G .haps.gz, .legend, .sample, excluding the _chr{chrnum} portion
     - example: if the files are titled
