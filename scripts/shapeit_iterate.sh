@@ -18,7 +18,7 @@ plink --bfile ${INPUT} --exclude ${INPUT}_removeSNPs --make-bed --out ${INPUT}_e
 # Run SHAPEIT
 shapeit -B ${INPUT}_endsTrimmed -M ${MAP} --input-ref ${REF_HAP} ${REF_LEG} ${REF_SAMP} --duohmm -W 5 -O ${OUTPUT} --output-log ${LOG}.log -T 4
 
-files=( ${LOG}.snp.strand )
+files=( ${LOG}'.snp.strand' )
 if (( ${#files[@]} )); then
   N=`ls -l ${LOG}.snp.strand | wc -l`
   while [ $N -gt 0 ]
